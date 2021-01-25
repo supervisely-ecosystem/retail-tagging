@@ -19,7 +19,6 @@ meta: sly.ProjectMeta = None
 user2batches_path = None
 catalog_path = None
 field_name = None
-column_name = None
 target_class_name = None
 reference_tag_name = None
 multiselect_class_name = None
@@ -96,11 +95,6 @@ def init():
     _tag: sly.TagMeta = meta.tag_metas.get(tag_name)
     if _tag.value_type != sly.TagValueType.ANY_STRING:
         raise TypeError(f"Tag {tag_name} should have string value type")
-
-    global column_name
-    column_name = os.environ['modal.state.columnName']
-    _empty_string_error(column_name, "Catalog column name")
-    sly.logger.info("column_name", extra={"column_name": column_name})
 
     global target_class_name
     target_class_name = os.environ['modal.state.targetClassName']

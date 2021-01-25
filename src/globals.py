@@ -10,7 +10,7 @@ def _empty_string_error(var, name):
 app: sly.AppService = sly.AppService()
 api: sly.Api = None
 task_id = None
-#owner_id = None
+owner_id = None
 team_id = None
 workspace_id = None
 project_id = None
@@ -42,6 +42,7 @@ image_preview_options = {
     "resizeOnZoom": True
 }
 
+
 def init():
     sly.logger.info("Initialize input arguments")
 
@@ -51,9 +52,9 @@ def init():
     global task_id
     task_id = app.task_id
 
-    #global owner_id
-    #owner_id = int(os.environ['context.userId'])
-    #sly.logger.info("owner_id", extra={"owner_id": owner_id})
+    global owner_id
+    owner_id = int(os.environ['context.userId'])
+    sly.logger.info("owner_id", extra={"owner_id": owner_id})
 
     global team_id
     team_id = int(os.environ['context.teamId'])
@@ -91,6 +92,10 @@ def init():
     tag_name = os.environ["modal.state.tagName"]
     _empty_string_error(tag_name, "Target tag name")
     sly.logger.info("tag_name", extra={"tag_name": tag_name})
+
+    _tag: sly.TagMeta = meta.tag_metas.get(tag_name)
+    if _tag.value_type != sly.TagValueType.ANY_STRING:
+        raise TypeError(f"Tag {tag_name} should have string value type")
 
     global column_name
     column_name = os.environ['modal.state.columnName']

@@ -1,8 +1,12 @@
 <div>
-    <div v-if="context.projectId !== data.targetProject.id" style="color: red;">
-        This app session is only for project {{data.targetProject.name}} (id = {{data.targetProject.id}})
+    <div v-if="context.projectId !== data.targetProject.id ||
+               !data.allowedUsers.includes(context.userId)" style="color: red;">
+        <div>This app session is only for project {{data.targetProject.name}} (id = {{data.targetProject.id}})</div>
+        <div>and for users {{data.allowedUsers}}</div>
     </div>
-    <div id="mark-reference-objects-for-retail" v-if="context.projectId === data.targetProject.id">
+    <div>{{context.userId}}</div>
+    <div id="mark-reference-objects-for-retail" v-if="context.projectId === data.targetProject.id &&
+                                                      data.allowedUsers.includes(context.userId)">
         <sly-style>
             #mark-reference-objects-for-retail {
 
@@ -56,7 +60,8 @@
                             type="primary"
                             size="mini"
                             :disabled="context.figureId === null ||
-                                   ![state.targetClass, state.multiselectClass].includes(context.figureClassTitle)"
+                                    ![state.targetClass, state.multiselectClass].includes(context.figureClassTitle) ||
+                                    !state.selected[context.userId]"
                             @click="command('assign_tag')">
                         <i class="zmdi zmdi-label mr5"></i> Tag
                     </el-button>
@@ -90,7 +95,7 @@
         </div>
         <el-tabs id="small_tabs" v-model="state.selectedTab">
             <el-tab-pane label="REFERENCES" name="references" class="ml5">
-                <pre>{{state.selected}}</pre>
+<!--                <pre>{{state.selected}}</pre>-->
                 <sly-grid-gallery
                         class="mr5"
                         v-show="data.userGrid.hasOwnProperty(context.userId)"
@@ -110,47 +115,6 @@
                         </div>
                     </template>
                 </sly-grid-gallery>
-
-                <!--                <div v-if="data.user.hasOwnProperty(context.userId) &&-->
-                <!--                           data.user[context.userId].fieldNotFound.length > 0"-->
-                <!--                     style="color:red;"-->
-                <!--                >-->
-                <!--                    {{data.user[context.userId].fieldNotFound}}-->
-                <!--                </div>-->
-                <!--                <div class="info">-->
-                <!--                    <div v-if="data.user.hasOwnProperty(context.userId) &&-->
-                <!--                               data.user[context.userId].fieldNotFound.length === 0">-->
-                <!--                        <div style="color: green; font-weight: 500;">IMAGE FIELD:</div>-->
-                <!--                        <b style="color: #777777;">{{data.fieldName}}</b>: {{data.user[context.userId].fieldValue}}-->
-                <!--                        <div class="mt10" style="color: green; font-weight: 500;">CATALOG INFO:</div>-->
-                <!--                        <div v-for="v,k in data.user[context.userId].catalogInfo">-->
-                <!--                            <b style="color: #777777;">{{k}}</b>: {{v}}-->
-                <!--                        </div>-->
-                <!--                        <div class="mt10" style="color: green; font-weight: 500;">-->
-                <!--                            REFERENCES (found / total): {{data.user[context.userId].refCount}} /-->
-                <!--                            {{data.user[context.userId].totalRefCount}}-->
-                <!--                        </div>-->
-
-                <!--                    </div>-->
-                <!--                    <sly-grid-gallery-->
-                <!--                            v-show="data.user.hasOwnProperty(context.userId) && data.user[context.userId].refCount > 0"-->
-                <!--                            :content="(data.user.hasOwnProperty(context.userId) && data.user[context.userId].refCount > 0)-->
-                <!--                                       ? data.user[context.userId].previewRefs.content-->
-                <!--                                       : data.emptyGallery.content"-->
-                <!--                            :options="(data.user.hasOwnProperty(context.userId) && data.user[context.userId].refCount > 0)-->
-                <!--                                       ? data.user[context.userId].previewRefs.options-->
-                <!--                                       : data.emptyGallery.options"-->
-                <!--                    >-->
-                <!--                        <template v-slot:card-footer="{ annotation }">-->
-                <!--                            <el-checkbox-->
-                <!--                                    class="mt5"-->
-                <!--                                    v-model="state.user[context.userId].cardsCheckboxes[annotation.labelId]"-->
-                <!--                            >-->
-                <!--                                delete-->
-                <!--                            </el-checkbox>-->
-                <!--                        </template>-->
-                <!--                    </sly-grid-gallery>-->
-                <!--                </div>-->
             </el-tab-pane>
             <el-tab-pane label="CATALOG" name="catalog" class="ml5">
                 <span slot="label"><i class="zmdi zmdi-view-list-alt"></i> CATALOG</span>

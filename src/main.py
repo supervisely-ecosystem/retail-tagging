@@ -3,9 +3,9 @@ import supervisely_lib as sly
 
 import globals as ag  # application globals
 import catalog
-import references
 import objects_iterator
 import batches
+import tagging
 
 
 @ag.app.callback("manual_selected_image_changed")
@@ -59,7 +59,7 @@ def main():
     sly.logger.info("Initialize catalog ...")
     catalog.init()
     data["catalog"] = json.loads(catalog.df.to_json(orient="split"))
-    data["emptyGallery"] = references.empty_gallery
+    data["emptyGallery"] = batches.empty_gallery
 
     sly.logger.info("Initialize batches ...")
     batches.init(data, state)

@@ -90,7 +90,27 @@
         </div>
         <el-tabs id="small_tabs" v-model="state.selectedTab">
             <el-tab-pane label="REFERENCES" name="references" class="ml5">
-                <div>123</div>
+                <pre>{{state.selected}}</pre>
+                <sly-grid-gallery
+                        class="mr5"
+                        v-show="data.userGrid.hasOwnProperty(context.userId)"
+                        v-model="state.selected[context.userId]"
+                        :content="data.userGrid.hasOwnProperty(context.userId)
+                                  ? data.userGrid[context.userId].content
+                                  : data.emptyGallery.content"
+                        :options="data.userGrid.hasOwnProperty(context.userId)
+                                  ? data.userGrid[context.userId].options
+                                  : data.emptyGallery.options"
+                >
+                    <template v-slot:card-footer="{ annotation }">
+<!--                        <div>{{annotation.catalogInfo}}</div>-->
+                        <div class="mt5" style="color: green; font-weight: 500;">CATALOG INFO:</div>
+                        <div v-for="v,k in annotation.catalogInfo">
+                            <b style="color: #777777;">{{k}}</b>:{{v}}
+                        </div>
+                    </template>
+                </sly-grid-gallery>
+
                 <!--                <div v-if="data.user.hasOwnProperty(context.userId) &&-->
                 <!--                           data.user[context.userId].fieldNotFound.length > 0"-->
                 <!--                     style="color:red;"-->

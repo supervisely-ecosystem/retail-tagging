@@ -15,25 +15,30 @@ team_id = None
 workspace_id = None
 project_id = None
 project = None
-meta = None
+meta: sly.ProjectMeta = None
+user2batches_path = None
 catalog_path = None
 field_name = None
 column_name = None
 target_class_name = None
 reference_tag_name = None
 multiselect_class_name = None
+gallery_meta: sly.ProjectMeta = None
+
+
 image_grid_options = {
-    "opacity": 0.5,
+    "opacity": 1, #0.5,
     "fillRectangle": False, #True
     "enableZoom": False,
     "syncViews": False,
     "showPreview": True,
     "selectable": True
 }
+
 image_preview_options = {
-    "opacity": 0.5,
+    "opacity": 1, #0.5,
     "fillRectangle": False,
-    "enableZoom": True,
+    "enableZoom": False,
     "resizeOnZoom": True
 }
 
@@ -72,6 +77,11 @@ def init():
     if len(meta.tag_metas) == 0:
         raise RuntimeError(f"Project {project.name} doesn't have tags")
 
+    global user2batches_path
+    user2batches_path = os.environ["modal.state.user2batchesPath"]
+    _empty_string_error(user2batches_path, "user2batchesPath path")
+    sly.logger.info("user2batches_path", extra={"user2batches_path": user2batches_path})
+
     global catalog_path
     catalog_path = os.environ["modal.state.catalogPath"]
     _empty_string_error(catalog_path, "CSV catalog path")
@@ -96,3 +106,8 @@ def init():
     multiselect_class_name = os.environ['modal.state.multiselectClassName']
     _empty_string_error(multiselect_class_name, "Multiselect class name")
     sly.logger.info("multiselect_class_name", extra={"multiselect_class_name": multiselect_class_name})
+
+    global gallery_meta
+    gallery_meta = sly.ProjectMeta(obj_classes=sly.ObjClassCollection([
+        sly.ObjClass("product", sly.Rectangle, [0, 255, 0])
+    ]))

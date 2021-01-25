@@ -10,7 +10,7 @@ def _empty_string_error(var, name):
 app: sly.AppService = sly.AppService()
 api: sly.Api = None
 task_id = None
-owner_id = None
+#owner_id = None
 team_id = None
 workspace_id = None
 project_id = None
@@ -46,9 +46,9 @@ def init():
     global task_id
     task_id = app.task_id
 
-    global owner_id
-    owner_id = int(os.environ['context.userId'])
-    sly.logger.info("owner_id", extra={"owner_id": owner_id})
+    #global owner_id
+    #owner_id = int(os.environ['context.userId'])
+    #sly.logger.info("owner_id", extra={"owner_id": owner_id})
 
     global team_id
     team_id = int(os.environ['context.teamId'])
@@ -70,17 +70,17 @@ def init():
     if len(meta.obj_classes) == 0:
         raise RuntimeError(f"Project {project.name} doesn't have classes")
     if len(meta.tag_metas) == 0:
-        raise RuntimeError(f"Project {project.name} doesn't have tags (without value)")
+        raise RuntimeError(f"Project {project.name} doesn't have tags")
 
     global catalog_path
     catalog_path = os.environ["modal.state.catalogPath"]
     _empty_string_error(catalog_path, "CSV catalog path")
     sly.logger.info("catalog_path", extra={"catalog_path": catalog_path})
 
-    global field_name
-    field_name = os.environ["modal.state.fieldName"]
-    _empty_string_error(field_name, "Image metadata field")
-    sly.logger.info("field_name", extra={"field_name": field_name})
+    global tag_name
+    tag_name = os.environ["modal.state.tagName"]
+    _empty_string_error(tag_name, "Target tag name")
+    sly.logger.info("tag_name", extra={"tag_name": tag_name})
 
     global column_name
     column_name = os.environ['modal.state.columnName']
@@ -91,11 +91,6 @@ def init():
     target_class_name = os.environ['modal.state.targetClassName']
     _empty_string_error(target_class_name, "Target class name")
     sly.logger.info("target_class_name", extra={"target_class_name": target_class_name})
-
-    global reference_tag_name
-    reference_tag_name = os.environ['modal.state.referenceTagName']
-    _empty_string_error(reference_tag_name, "Reference tag name")
-    sly.logger.info("reference_tag_name", extra={"reference_tag_name": reference_tag_name})
 
     global multiselect_class_name
     multiselect_class_name = os.environ['modal.state.multiselectClassName']

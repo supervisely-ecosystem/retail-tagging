@@ -70,59 +70,67 @@
                         <i class="zmdi zmdi-close-circle mr5"></i> Untag
                     </el-button>
                 </div>
-                <el-button
-                        class="mt5 mr5 mb15"
-                        type="danger"
-                        size="mini"
-                        :disabled="Object.values(state.user[context.userId].cardsCheckboxes).filter(Boolean).length == 0"
-                        @click="command('delete_reference')"
-                >
-                    <i class="zmdi zmdi-delete mr5"></i> Delete references
-                </el-button>
+                <div>
+                    <el-button
+                            class="mt5 mb15"
+                            size="mini"
+                            @click="command('select_prev_object')"
+                    >
+                        <i class="zmdi zmdi-arrow-left"></i> Prev object
+                    </el-button>
+                    <el-button
+                            class="mt5 mr5 mb15"
+                            size="mini"
+                            @click="command('select_next_object')"
+                    >
+                        <i class="zmdi zmdi-arrow-right"></i> Next object
+                    </el-button>
+                </div>
             </div>
         </div>
         <el-tabs id="small_tabs" v-model="state.selectedTab">
-            <el-tab-pane label="PRODUCT" name="product" class="ml5">
-                <div v-if="data.user.hasOwnProperty(context.userId) &&
-                           data.user[context.userId].fieldNotFound.length > 0"
-                     style="color:red;"
-                >
-                    {{data.user[context.userId].fieldNotFound}}
-                </div>
-                <div class="info">
-                    <div v-if="data.user.hasOwnProperty(context.userId) &&
-                               data.user[context.userId].fieldNotFound.length === 0">
-                        <div style="color: green; font-weight: 500;">IMAGE FIELD:</div>
-                        <b style="color: #777777;">{{data.fieldName}}</b>: {{data.user[context.userId].fieldValue}}
-                        <div class="mt10" style="color: green; font-weight: 500;">CATALOG INFO:</div>
-                        <div v-for="v,k in data.user[context.userId].catalogInfo">
-                            <b style="color: #777777;">{{k}}</b>: {{v}}
-                        </div>
-                        <div class="mt10" style="color: green; font-weight: 500;">
-                            REFERENCES (found / total): {{data.user[context.userId].refCount}} /
-                            {{data.user[context.userId].totalRefCount}}
-                        </div>
+            <el-tab-pane label="REFERENCES" name="references" class="ml5">
+                <div>123</div>
+                <!--                <div v-if="data.user.hasOwnProperty(context.userId) &&-->
+                <!--                           data.user[context.userId].fieldNotFound.length > 0"-->
+                <!--                     style="color:red;"-->
+                <!--                >-->
+                <!--                    {{data.user[context.userId].fieldNotFound}}-->
+                <!--                </div>-->
+                <!--                <div class="info">-->
+                <!--                    <div v-if="data.user.hasOwnProperty(context.userId) &&-->
+                <!--                               data.user[context.userId].fieldNotFound.length === 0">-->
+                <!--                        <div style="color: green; font-weight: 500;">IMAGE FIELD:</div>-->
+                <!--                        <b style="color: #777777;">{{data.fieldName}}</b>: {{data.user[context.userId].fieldValue}}-->
+                <!--                        <div class="mt10" style="color: green; font-weight: 500;">CATALOG INFO:</div>-->
+                <!--                        <div v-for="v,k in data.user[context.userId].catalogInfo">-->
+                <!--                            <b style="color: #777777;">{{k}}</b>: {{v}}-->
+                <!--                        </div>-->
+                <!--                        <div class="mt10" style="color: green; font-weight: 500;">-->
+                <!--                            REFERENCES (found / total): {{data.user[context.userId].refCount}} /-->
+                <!--                            {{data.user[context.userId].totalRefCount}}-->
+                <!--                        </div>-->
 
-                    </div>
-                    <sly-grid-gallery
-                            v-show="data.user.hasOwnProperty(context.userId) && data.user[context.userId].refCount > 0"
-                            :content="(data.user.hasOwnProperty(context.userId) && data.user[context.userId].refCount > 0)
-                                       ? data.user[context.userId].previewRefs.content
-                                       : data.emptyGallery.content"
-                            :options="(data.user.hasOwnProperty(context.userId) && data.user[context.userId].refCount > 0)
-                                       ? data.user[context.userId].previewRefs.options
-                                       : data.emptyGallery.options"
-                    >
-                        <template v-slot:card-footer="{ annotation }">
-                            <el-checkbox
-                                    class="mt5"
-                                    v-model="state.user[context.userId].cardsCheckboxes[annotation.labelId]"
-                            >
-                                delete
-                            </el-checkbox>
-                        </template>
-                    </sly-grid-gallery>
-                </div>
+                <!--                    </div>-->
+                <!--                    <sly-grid-gallery-->
+                <!--                            v-show="data.user.hasOwnProperty(context.userId) && data.user[context.userId].refCount > 0"-->
+                <!--                            :content="(data.user.hasOwnProperty(context.userId) && data.user[context.userId].refCount > 0)-->
+                <!--                                       ? data.user[context.userId].previewRefs.content-->
+                <!--                                       : data.emptyGallery.content"-->
+                <!--                            :options="(data.user.hasOwnProperty(context.userId) && data.user[context.userId].refCount > 0)-->
+                <!--                                       ? data.user[context.userId].previewRefs.options-->
+                <!--                                       : data.emptyGallery.options"-->
+                <!--                    >-->
+                <!--                        <template v-slot:card-footer="{ annotation }">-->
+                <!--                            <el-checkbox-->
+                <!--                                    class="mt5"-->
+                <!--                                    v-model="state.user[context.userId].cardsCheckboxes[annotation.labelId]"-->
+                <!--                            >-->
+                <!--                                delete-->
+                <!--                            </el-checkbox>-->
+                <!--                        </template>-->
+                <!--                    </sly-grid-gallery>-->
+                <!--                </div>-->
             </el-tab-pane>
             <el-tab-pane label="CATALOG" name="catalog" class="ml5">
                 <span slot="label"><i class="zmdi zmdi-view-list-alt"></i> CATALOG</span>

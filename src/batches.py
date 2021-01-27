@@ -42,6 +42,9 @@ def init(data, state):
         user_selected[user_id] = None
         user_grid_items = []
         for bindex in bindices:
+            if bindex not in batches:
+                raise KeyError(f"Batch with index {bindex} is assigned to user {userLogin}. "
+                               f"But batch with index {bindex} doesn't exist in {user2batches['batches_path']}")
             batch = batches[bindex]
             for reference_key, ref_examples in batch["references"].items():
                 for reference_info in ref_examples:

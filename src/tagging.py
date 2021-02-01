@@ -40,7 +40,8 @@ def change_tag(api: sly.Api, task_id, context, state, app_logger, action_figure)
     selected_label = ann.get_label_by_id(figure_id)
 
     if selected_label is None:
-        raise KeyError(f"Figure with id {figure_id} is not found in annotation")
+        sly.logger.warn(f"Figure with id {figure_id} is not found in annotation")
+        return
     if selected_label.obj_class.name == ag.target_class_name:
         action_figure(api, figure_id, tag_meta, tag_value)
     elif selected_label.obj_class.name == ag.multiselect_class_name:

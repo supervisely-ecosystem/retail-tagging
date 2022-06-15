@@ -2,8 +2,8 @@
   "name": "Retail Tagging",
   "type": "app",
   "categories": [
-    "retail",
-    "tagging"
+    "images",
+    "labeling"
   ],
   "description": "Supports multi-user mode",
   "docker_image": "supervisely/base-py-sdk:6.1.46",
@@ -20,10 +20,14 @@
   "task_location": "workspace_tasks",
   "isolate": true,
   "headless": true,
-  "integrated_into": ["image_annotation_tool"],
+  "integrated_into": [
+    "image_annotation_tool"
+  ],
   "icon": "https://img.icons8.com/color/96/000000/refresh-barcode.png",
   "icon_background": "#FFFFFF",
   "context_menu": {
-    "target": ["images_project"]
+    "target": [
+      "images_project"
+    ]
   }
 }

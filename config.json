@@ -23,7 +23,7 @@
   "integrated_into": [
     "image_annotation_tool"
   ],
-  "icon": "https://img.icons8.com/color/96/000000/refresh-barcode.png",
+  "icon": "https://github.com/supervisely-ecosystem/retail-tagging/assets/48245050/17328bf4-9185-425c-a34f-2e3215d115ec",
   "icon_background": "#FFFFFF",
   "context_menu": {
     "target": [
